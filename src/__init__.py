@@ -1,6 +1,7 @@
 import os
 
 from flask import Flask
+from flask_migrate import Migrate
 from flask_restx import Resource, Api
 from flask_sqlalchemy import SQLAlchemy
 
@@ -13,6 +14,8 @@ app.config.from_object(app_settings)
 
 
 db = SQLAlchemy()
+db.init_app(app)
+migrate = Migrate(app, db)
 
 
 class Ping(Resource):
