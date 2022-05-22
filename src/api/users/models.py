@@ -17,11 +17,13 @@ class User(db.Model):
     creation_date = db.Column(db.DateTime, default=func.now(), nullable=False)
     first_name = db.Column(db.String(128))
     second_name = db.Column(db.String(128))
-    password_hash = db.Column(db.string(128))
+    password_hash = db.Column(db.String(128))
 
-    def __init__(self, username, email):
+    def __init__(self, username, email, first_name, last_name):
         self.username = username
         self.email = email
+        self.first_name = first_name
+        self.last_name = last_name
 
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)

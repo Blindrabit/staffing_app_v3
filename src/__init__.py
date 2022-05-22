@@ -5,22 +5,21 @@ from flask_migrate import Migrate
 from flask_restx import Resource, Api
 from flask_sqlalchemy import SQLAlchemy
 
+
+db = SQLAlchemy()
+
+
 app = Flask(__name__)
-
-api = Api(app)
-
 app_settings = os.getenv("APP_SETTINGS")
 app.config.from_object(app_settings)
 
-
-db = SQLAlchemy()
 db.init_app(app)
-migrate = Migrate(app, db)
+Migrate(app, db)
+from src.api import api
+
+api.init_app(app)
 
 
 class Ping(Resource):
     def get(self):
         return {"status": "success", "message": "pong!"}
-
-
-api.add_resource(Ping, "/ping")
